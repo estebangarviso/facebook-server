@@ -1,7 +1,4 @@
 {
-  "engines": {
-    "yarn": "1.x"
-  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "colors": "^1.4.0",
