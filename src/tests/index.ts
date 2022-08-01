@@ -1,6 +1,6 @@
 import '../db';
 
-import { User } from '../models';
+import { User } from './../models';
 
 User.find({})
   .then((users) => {

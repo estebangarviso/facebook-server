@@ -1,6 +1,6 @@
 import { PreSaveMiddlewareFunction, HydratedDocument } from 'mongoose';
 import { SKIP_VALIDATION, SALT_WORK_FACTOR } from '../../config';
-import { IUser } from '../../@types/models/user.model';
+import type { IUser } from '../user.model.d';
 import bcrypt from 'bcrypt';
 
 const UserSchemaMethods: Record<any, (this: HydratedDocument<IUser>, ...args: any) => unknown> = {

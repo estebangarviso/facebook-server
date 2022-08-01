@@ -1,4 +1,4 @@
-import { Logger } from 'utils';
+import { Logger } from './../utils';
 import { Request, Response } from 'express';
 
 // make express callback function

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { IUser } from '../@types/models/user.model';
 import UserMethods, { preSaveUser } from './methods/user.method';
 import UserValidation from './validations/user.validation';
+import type { IUser } from './user.model.d';
 
 export const UserSchema = new Schema<IUser>(
   {

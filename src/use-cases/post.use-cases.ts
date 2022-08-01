@@ -1,7 +1,7 @@
-import { Post, Comment } from '../models';
+import { Post, Comment } from './../models';
 import { UploadedFile } from 'express-fileupload';
 import { Request, Response } from 'express';
-import { Logger } from '../utils';
+import { Logger } from './../utils';
 import { PUBLIC_DIR, PAGE_SIZES } from '../config';
 import sendWebSocketMessage from '../websocket-server/client';
 
