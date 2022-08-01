@@ -1,4 +1,8 @@
 {
+  "engines": {
+    "node": "18.2.0",
+    "yarn": "1.22.19"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "colors": "^1.4.0",
