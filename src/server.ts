@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(express.json());
 app.use('/', express.static(PUBLIC_DIR));
+app.set('trust proxy', 1);
 
 // Routes
 app.use(PostRoute);
