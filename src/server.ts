@@ -18,8 +18,7 @@ const app = express();
 
 // Middleware
 app.use(cookieParser());
-// app.use(cors({ credentials: true, origin: FRONTEND_ORIGIN }));
-app.use(cors());
+app.use(cors({ credentials: true, origin: FRONTEND_ORIGIN }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(express.json());
