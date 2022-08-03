@@ -19,11 +19,12 @@ const app = express();
 // Middleware
 app.use(cookieParser());
 // app.use(cors({ credentials: true, origin: FRONTEND_ORIGIN }));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(express.json());
 app.use('/', express.static(PUBLIC_DIR));
-app.set('trust proxy', 1);
+app.set('trust proxy', true);
 
 // Routes
 app.use(PostRoute);
