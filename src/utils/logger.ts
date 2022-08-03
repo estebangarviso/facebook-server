@@ -2,6 +2,9 @@ import logger from 'loglevel';
 import chalk from 'chalk';
 
 export class Logger {
+  static info(message: any) {
+    console.info(chalk.blue(`[app] 💬 `, message));
+  }
   static log(message: any) {
     // logger.info(chalk.green(`[app] 🪵 `, message));
     console.log(chalk.green(`[app] 🪵 `, message));
