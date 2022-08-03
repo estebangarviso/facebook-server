@@ -38,7 +38,7 @@ const InitializedWebSocketServer = (server: Server) => {
           });
         }
       } catch (error) {
-        Logger.error(error);
+        Logger.error(error as string);
       }
     });
 

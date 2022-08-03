@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose, { ConnectOptions,ConnectionStates } from 'mongoose';
 import { DB_URI, DB_NAME } from '../config';
 import { Logger } from '../utils';
 
