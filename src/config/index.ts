@@ -18,6 +18,9 @@ export const PAGE_SIZES = JSON.parse(process.env.PAGE_SIZES as string) as { [key
 
 export default {
   verify: function () {
+    if (!PUBLIC_DIR) {
+      throw new Error('PUBLIC_DIR is not defined');
+    }
     if (!PORT) {
       throw new Error(`PORT is not defined`);
     }
