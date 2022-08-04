@@ -25,9 +25,9 @@ app.use(fileUpload());
 app.use(express.json());
 app.use('/', express.static(PUBLIC_DIR));
 app.set('trust proxy', true);
+app.use(maintenance);
 
 // Routes
-app.use(maintenance);
 app.use(PostRoute);
 app.use(UserRoute);
 app.get('*', (req, res) => {

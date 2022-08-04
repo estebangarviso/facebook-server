@@ -60,8 +60,8 @@ const register = async (req: Request, res: Response) => {
     }
     const user = new User({
       name: {
-        first: body.firstName,
-        last: body.lastName
+        first: body.first_name,
+        last: body.last_name
       },
       email: body.email,
       password: body.password,
