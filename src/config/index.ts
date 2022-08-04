@@ -3,6 +3,7 @@ import { Logger } from '../utils';
 import path from 'path';
 config();
 
+export const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === 'true';
 export const PUBLIC_DIR = path.join(__dirname, '../../public');
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
 export const ACCESS_TOKEN_EXPIRES_IN = process.env.ACCESS_TOKEN_EXPIRES_IN as string;
@@ -18,6 +19,9 @@ export const PAGE_SIZES = JSON.parse(process.env.PAGE_SIZES as string) as { [key
 
 export default {
   verify: function () {
+    if (typeof MAINTENANCE_MODE !== 'boolean') {
+      throw new Error('MAINTENANCE_MODE is not defined');
+    }
     if (!PUBLIC_DIR) {
       throw new Error('PUBLIC_DIR is not defined');
     }
@@ -39,7 +43,7 @@ export default {
     if (!FRONTEND_ORIGIN) {
       throw new Error('FRONTEND_ORIGIN is not defined');
     }
-    if (SKIP_VALIDATION !== true && SKIP_VALIDATION !== false) {
+    if (typeof SKIP_VALIDATION !== 'boolean') {
       throw new Error('SKIP_VALIDATION is not defined');
     }
     if (SALT_WORK_FACTOR < 1) {

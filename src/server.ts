@@ -11,6 +11,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import PostRoute from './routes/post.routes';
 import UserRoute from './routes/user.routes';
+import maintenance from './middlewares/maintenance';
 import connect from './db';
 
 // Bootstrap application with express
@@ -26,6 +27,7 @@ app.use('/', express.static(PUBLIC_DIR));
 app.set('trust proxy', true);
 
 // Routes
+app.use(maintenance);
 app.use(PostRoute);
 app.use(UserRoute);
 app.get('*', (req, res) => {
