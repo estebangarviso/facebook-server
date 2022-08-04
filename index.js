@@ -1,1 +1,1 @@
-require('./build/server.js');
+module.exports = require('./dist/server.js');
