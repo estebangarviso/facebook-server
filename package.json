@@ -3,7 +3,8 @@
     "node": "16.x",
     "yarn": "1.22.x"
   },
-  "name": "facebook-server",
+  "name": "websocial-server",
+  "homepage": "https://back.websocial.live",
   "version": "1.0.0",
   "private": true,
   "main": "index.js",

@@ -48,6 +48,7 @@ const authenticate = async (req: Request, res: Response) => {
 const register = async (req: Request, res: Response) => {
   const body = req.body;
   const files = req.files;
+  Logger.log({ body, files });
   try {
     //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
     //Use the mv() method to place the file in upload directory (i.e. "uploads")

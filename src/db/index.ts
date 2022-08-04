@@ -9,8 +9,9 @@ if (!DB_NAME) {
   throw new Error('DB_NAME is not defined');
 }
 
+let attempts = 0;
+
 export default function connect(handleOpen?: () => void) {
-  Logger.info(`Connecting to ${DB_NAME} database...`);
   mongoose.connect(`${DB_URI}`, {
     dbName: DB_NAME,
     keepAlive: true,
@@ -19,12 +20,32 @@ export default function connect(handleOpen?: () => void) {
   } as ConnectOptions);
 
   const connection = mongoose.connection;
+  connection.on('connecting', () => {
+    Logger.info('Connecting to database...');
+  });
+  connection.on('reconnected', () => {
+    Logger.success('Reconnected to database');
+  });
   connection.on('error', Logger.error.bind(Logger, 'MongoDB connection error:'));
-  connection.on('disconnected', connect);
+  connection.on('disconnected', () => {
+    Logger.info('Disconnected from database');
+  });
   connection.once('open', () => {
-    Logger.success(`MongoDB connected to ${DB_NAME}`);
+    Logger.success(`Connected to database ${DB_NAME}`);
     if (handleOpen) {
       handleOpen();
+    }
+  });
+  connection.on('close', () => {
+    Logger.info('Connection to database closed');
+
+    if (connection.readyState === ConnectionStates.disconnected) {
+      attempts++;
+      Logger.info(`After connection was close. Trying to reconnect to database in 5 seconds... #Attempt: ${attempts}`);
+      setTimeout(() => {
+        connection.removeAllListeners();
+        connect();
+      }, 5000);
     }
   });
 
