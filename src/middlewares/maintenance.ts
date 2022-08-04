@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import { MAINTENANCE_MODE } from '../config';
+import { MAINTENANCE_MODE, MAINTENANCE_MODE_WHITELIST_IPS } from '../config';
 
 const maintenance: RequestHandler = (req, res, next) => {
-  if (MAINTENANCE_MODE) {
+  if (MAINTENANCE_MODE && !MAINTENANCE_MODE_WHITELIST_IPS.includes(req.ip)) {
     return res.status(503).json({
       message: 'Service unavailable, please try again later'
     });

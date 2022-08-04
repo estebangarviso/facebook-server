@@ -4,6 +4,7 @@ import path from 'path';
 config();
 
 export const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === 'true';
+export const MAINTENANCE_MODE_WHITELIST_IPS = process.env.MAINTENANCE_MODE_WHITELIST_IPS ? process.env.MAINTENANCE_MODE_WHITELIST_IPS.split(',') : [];
 export const PUBLIC_DIR = path.join(__dirname, '../../public');
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
 export const ACCESS_TOKEN_EXPIRES_IN = process.env.ACCESS_TOKEN_EXPIRES_IN as string;
