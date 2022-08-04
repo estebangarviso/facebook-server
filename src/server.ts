@@ -5,13 +5,13 @@ Config.verify();
 import { Logger } from './utils';
 import InitializedWebSocketServer from './websocket-server/server';
 import express from 'express';
-import mongoose, { ConnectOptions } from 'mongoose';
 import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import PostRoute from './routes/post.routes';
 import UserRoute from './routes/user.routes';
+import connect from './db';
 
 // Bootstrap application with express
 const app = express();
@@ -34,27 +34,16 @@ app.get('*', (req, res) => {
   });
 });
 
+// Express server
 const server = app.listen(PORT, () => {
-  Logger.success(`Server is running on port ${PORT}`);
+  Logger.success(`Express server is running on port ${PORT}`);
 });
 
+// Initialize websocket server
 function listen() {
-  Logger.success(`MongoDB connected to ${DB_NAME}`);
   if (app.get('env') === 'test') return;
   InitializedWebSocketServer(server);
 }
 
-//Set up default mongoose connection
-(function connect() {
-  mongoose.connect(`${DB_URI}`, {
-    dbName: DB_NAME,
-    keepAlive: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  } as ConnectOptions);
-
-  return mongoose.connection
-    .on('error', Logger.error.bind(Logger, 'MongoDB connection error:'))
-    .on('disconnected', connect)
-    .once('open', listen);
-})();
+// Connect to MongoDB
+connect(listen);

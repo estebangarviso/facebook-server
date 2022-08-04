@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions,ConnectionStates } from 'mongoose';
+import mongoose, { ConnectOptions, ConnectionStates } from 'mongoose';
 import { DB_URI, DB_NAME } from '../config';
 import { Logger } from '../utils';
 
@@ -9,7 +9,7 @@ if (!DB_NAME) {
   throw new Error('DB_NAME is not defined');
 }
 
-(function connect() {
+export default function connect(handleOpen?: () => void) {
   Logger.info(`Connecting to ${DB_NAME} database...`);
   mongoose.connect(`${DB_URI}`, {
     dbName: DB_NAME,
@@ -18,10 +18,15 @@ if (!DB_NAME) {
     useUnifiedTopology: true
   } as ConnectOptions);
 
-  return mongoose.connection
-    .on('error', Logger.error.bind(Logger, 'MongoDB connection error:'))
-    .on('disconnected', connect)
-    .once('open', () => {
-      Logger.success(`MongoDB connected to ${DB_NAME}`);
-    });
-})();
+  const connection = mongoose.connection;
+  connection.on('error', Logger.error.bind(Logger, 'MongoDB connection error:'));
+  connection.on('disconnected', connect);
+  connection.once('open', () => {
+    Logger.success(`MongoDB connected to ${DB_NAME}`);
+    if (handleOpen) {
+      handleOpen();
+    }
+  });
+
+  return connection;
+}

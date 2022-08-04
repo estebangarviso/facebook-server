@@ -1,6 +1,7 @@
-import '../db';
-
+import connect from '../db';
 import { User } from './../models';
+
+connect();
 
 User.find({})
   .then((users) => {
