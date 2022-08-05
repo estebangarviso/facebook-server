@@ -4,7 +4,7 @@ import type { IUser } from '../user.model.d';
 import bcrypt from 'bcrypt';
 
 const UserSchemaMethods: Record<any, (this: HydratedDocument<IUser>, ...args: any) => unknown> = {
-  skipValidation: function () {
+  skipValidation () {
     // !TODO: implement providers -> ~oAuthTypes.indexOf(this.provider); const oAuthTypes = ['github', 'twitter', 'google', 'linkedin'];
     return SKIP_VALIDATION;
   },

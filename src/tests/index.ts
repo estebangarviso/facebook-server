@@ -1,7 +1,7 @@
-import connect from '../db';
-import { User } from './../models';
+import MongoConnect from "../db";
+import { User } from "./../models";
 
-connect();
+MongoConnect();
 
 User.find({})
   .then((users) => {

@@ -28,7 +28,7 @@ const createPost = async (req: Request, res: Response) => {
   const files = req.files;
 
   body.user = user._id; // it comes from the token _id is userId
-  let media = files?.media as UploadedFile;
+  const media = files?.media as UploadedFile;
   try {
     //Use the mv() method to place the file in upload directory (i.e. "uploads")
     if (media) {
@@ -40,11 +40,8 @@ const createPost = async (req: Request, res: Response) => {
     const post = new Post(body);
     await post.save().then(async (_post) => await _post.populate('user', 'avatar name'));
     sendWebSocketMessage({
-      data: {
-        type: 'posts/postAdded',
-        payload: post
-      },
-      clients: 'ALL'
+      type: 'posts/postAdded',
+      payload: post
     });
     return res.status(200).json({
       success: true,
@@ -74,11 +71,8 @@ const deletePost = async (req: Request, res: Response) => {
     Post.remove(postId);
     Logger.log(`Post with id ${postId} deleted`);
     sendWebSocketMessage({
-      data: {
-        type: 'posts/postDeleted',
-        payload: postId
-      },
-      clients: 'ALL'
+      type: 'posts/postDeleted',
+      payload: postId
     });
     return res.status(200).json({
       success: true,
@@ -106,11 +100,8 @@ const createComment = async (req: Request, res: Response) => {
     await comment.save().then(async (_comment) => await _comment.populate('user', 'avatar name'));
     console.log('Log from createComment: ', comment);
     sendWebSocketMessage({
-      data: {
-        type: 'comments/commentAdded',
-        payload: comment
-      },
-      clients: 'ALL'
+      type: 'comments/commentAdded',
+      payload: comment
     });
     return res.status(200).json({
       success: true,
@@ -155,11 +146,8 @@ const deleteComment = async (req: Request, res: Response) => {
     Comment.remove(commentId);
     Logger.log(`Comment with id ${commentId} deleted`);
     sendWebSocketMessage({
-      data: {
-        type: 'comments/commentDeleted',
-        payload: commentId
-      },
-      clients: 'ALL'
+      type: 'comments/commentDeleted',
+      payload: commentId
     });
     return res.status(200).json({
       success: true,

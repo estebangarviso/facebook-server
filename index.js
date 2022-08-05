@@ -1,1 +1,4 @@
-module.exports = require('./dist/server.js');
+if (process.env.NODE_ENV === undefined) {
+  process.env.NODE_ENV = "production";
+}
+require("./dist/index.js");

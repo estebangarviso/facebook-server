@@ -2,21 +2,20 @@ import WebSocket from 'ws';
 import { WEBSOCKET_SERVER_URL, WEBSOCKET_SERVER_KEY } from '../config';
 import { Logger } from '../utils';
 
-function sendWebSocketMessage({
-  data,
-  clients
-}: {
+/**
+ * Send websocket message to clients
+ */
+function sendWebSocketMessage(
   data: {
     type: string;
     payload: any;
-  };
-  clients: string[] | 'ALL';
-}) {
+  },
+  clients?: string[]
+) {
   try {
     const ws = new WebSocket(`${WEBSOCKET_SERVER_URL}?clientId=SERVER`);
     ws.addEventListener('open', () => {
       try {
-        console.log('We are connected');
         const dataObject = {
           key: WEBSOCKET_SERVER_KEY,
           data,

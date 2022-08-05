@@ -1,50 +1,55 @@
-import mongoose, { ConnectOptions, ConnectionStates } from 'mongoose';
-import { DB_URI, DB_NAME } from '../config';
-import { Logger } from '../utils';
+import mongoose, { ConnectOptions, ConnectionStates } from "mongoose";
+import { DB_URI, DB_NAME } from "../config";
+import { Logger } from "../utils";
 
 if (!DB_URI) {
-  throw new Error('DB_URI is not defined');
+  throw new Error("DB_URI is not defined");
 }
 if (!DB_NAME) {
-  throw new Error('DB_NAME is not defined');
+  throw new Error("DB_NAME is not defined");
 }
 
 let attempts = 0;
 
-export default function connect(handleOpen?: () => void) {
+export default function MongoConnect(handleOpen?: () => void) {
   mongoose.connect(`${DB_URI}`, {
     dbName: DB_NAME,
     keepAlive: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   } as ConnectOptions);
 
   const connection = mongoose.connection;
-  connection.on('connecting', () => {
-    Logger.info('Connecting to database...');
+  connection.on("connecting", () => {
+    Logger.info("Connecting to database...");
   });
-  connection.on('reconnected', () => {
-    Logger.success('Reconnected to database');
+  connection.on("reconnected", () => {
+    Logger.success("Reconnected to database");
   });
-  connection.on('error', Logger.error.bind(Logger, 'MongoDB connection error:'));
-  connection.on('disconnected', () => {
-    Logger.info('Disconnected from database');
+  connection.on(
+    "error",
+    Logger.error.bind(Logger, "MongoDB connection error:")
+  );
+  connection.on("disconnected", () => {
+    Logger.info("Disconnected from database");
   });
-  connection.once('open', () => {
+  connection.once("open", () => {
     Logger.success(`Connected to database ${DB_NAME}`);
     if (handleOpen) {
       handleOpen();
     }
   });
-  connection.on('close', () => {
-    Logger.info('Connection to database closed');
+  connection.on("close", () => {
+    Logger.info("Connection to database closed");
 
     if (connection.readyState === ConnectionStates.disconnected) {
       attempts++;
-      Logger.info(`After connection was close. Trying to reconnect to database in 5 seconds... #Attempt: ${attempts}`);
+      Logger.info(
+        `After connection was close. Trying to reconnect to database in 5 seconds... #Attempt: ${attempts}`
+      );
       setTimeout(() => {
         connection.removeAllListeners();
-        connect();
+        MongoConnect();
       }, 5000);
     }
   });

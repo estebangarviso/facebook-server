@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ACCESS_TOKEN_SECRET } from '../config';
 
-const authenticate: RequestHandler = (req, res, next) => {
+const isAuthenticated: RequestHandler = (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
@@ -13,7 +13,7 @@ const authenticate: RequestHandler = (req, res, next) => {
 
   //Decoding the token
   try {
-    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET as string) as JwtPayload;
+    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as JwtPayload;
     req.user = decoded.user;
 
     next();
@@ -24,4 +24,4 @@ const authenticate: RequestHandler = (req, res, next) => {
   }
 };
 
-export default authenticate;
+export default isAuthenticated;

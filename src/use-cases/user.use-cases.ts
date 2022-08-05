@@ -52,7 +52,7 @@ const register = async (req: Request, res: Response) => {
   try {
     //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
     //Use the mv() method to place the file in upload directory (i.e. "uploads")
-    let avatar = files?.avatar as UploadedFile;
+    const avatar = files?.avatar as UploadedFile;
     const fileName = `${Date.now()}-${avatar?.name}`;
     if (avatar) {
       body.avatar = '/uploads/avatars/' + fileName;
