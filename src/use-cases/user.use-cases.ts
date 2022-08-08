@@ -97,7 +97,7 @@ const register = async (req: Request, res: Response) => {
 const refresh = async (req: Request, res: Response) => {
   const token =
     req.cookies.token || req.headers.Authorization?.toString().split(" ")[1];
-  console.log({ token });
+  console.log({ headers: JSON.stringify(req.headers) });
   if (!token) {
     return res.status(401).json({
       message: "No token provided",
@@ -140,7 +140,7 @@ const logout = (req: Request, res: Response) => {
   try {
     const token =
       req.cookies.token || req.headers.Authorization?.toString().split(" ")[1];
-    console.log({ token });
+    console.log({ headers: JSON.stringify(req.headers) });
     if (!token) {
       return res.status(401).json({
         message:
