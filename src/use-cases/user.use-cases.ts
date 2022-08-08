@@ -96,7 +96,7 @@ const register = async (req: Request, res: Response) => {
 
 const refresh = async (req: Request, res: Response) => {
   const token =
-    req.cookies.token || req.headers.Authorization?.toString().split(" ")[1];
+    req.cookies.token || req.headers.token?.toString().split(" ")[1];
   console.log({ headers: JSON.stringify(req.headers) });
   if (!token) {
     return res.status(401).json({
@@ -139,7 +139,7 @@ const logout = (req: Request, res: Response) => {
   // remove token from cookies if it exists and from jwt
   try {
     const token =
-      req.cookies.token || req.headers.Authorization?.toString().split(" ")[1];
+      req.cookies.token || req.headers.token?.toString().split(" ")[1];
     console.log({ headers: JSON.stringify(req.headers) });
     if (!token) {
       return res.status(401).json({
