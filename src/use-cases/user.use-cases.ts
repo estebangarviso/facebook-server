@@ -140,6 +140,7 @@ const logout = (req: Request, res: Response) => {
       cookies: req.cookies.token,
       headers: req.headers.token,
     },
+    cookies: req.cookies,
   });
 
   try {
