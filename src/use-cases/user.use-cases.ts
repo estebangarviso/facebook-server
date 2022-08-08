@@ -135,14 +135,6 @@ const refresh = async (req: Request, res: Response) => {
 
 const logout = (req: Request, res: Response) => {
   // remove token from cookies if it exists and from jwt
-  console.log({
-    tokens: {
-      cookies: req.cookies.token,
-      headers: req.headers.token,
-    },
-    cookies: req.cookies,
-  });
-
   try {
     const token = req.cookies.token;
     if (!token) {
