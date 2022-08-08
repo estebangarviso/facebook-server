@@ -136,7 +136,8 @@ const refresh = async (req: Request, res: Response) => {
 const logout = (req: Request, res: Response) => {
   // remove token from cookies if it exists and from jwt
   try {
-    const token = req.cookies.token;
+    const token =
+      req.cookies.token || req.headers.Authorization?.toString().split(" ")[1];
     if (!token) {
       return res.status(401).json({
         message:
