@@ -1,9 +1,5 @@
-import Config, { PORT, FRONTEND_ORIGIN, PUBLIC_DIR } from "./config";
-// Verify configuration values
-Config.verify();
-
+import { PORT, FRONTEND_ORIGIN, PUBLIC_DIR } from "./config";
 import { Logger } from "./utils";
-import InitializedWebSocketServer from "./websocket-server/server";
 import express from "express";
 import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
@@ -12,7 +8,6 @@ import cookieParser from "cookie-parser";
 import PostRoute from "./routes/post.routes";
 import UserRoute from "./routes/user.routes";
 import isUnderMaintenance from "./middlewares/isUnderMaintenance";
-import MongoConnect from "./db";
 
 // Build HTTP server
 export function buildHttpServer() {
@@ -37,17 +32,9 @@ export function buildHttpServer() {
   });
 
   // Express server
-  const server = app.listen(PORT, () => {
+  return app.listen(PORT, () => {
     Logger.success(
       `Express server is running on port ${PORT} in ${app.get("env")} mode`
     );
   });
-
-  // Initialize websocket server
-  function listen() {
-    InitializedWebSocketServer(server);
-  }
-
-  // Connect to MongoDB
-  MongoConnect(listen);
 }

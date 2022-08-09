@@ -7,8 +7,8 @@ declare global {
       ACCESS_TOKEN_EXPIRES_IN: string;
       PORT: string;
       FRONTEND_ORIGIN: string;
-      DB_URI: string;
-      DB_NAME: string;
+      DATABASE_URL: string;
+      DATABASE_NAME: string;
       SKIP_VALIDATION: "true" | "false";
       SALT_WORK_FACTOR: string;
       WEBSOCKET_SERVER_KEY: string;
