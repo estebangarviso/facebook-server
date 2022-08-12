@@ -74,7 +74,6 @@ const deletePost = async (req: Request, res: Response) => {
       });
     }
     Post.remove(postId);
-    Logger.log(`Post with id ${postId} deleted`);
     sendWebSocketMessage({
       type: "posts/postDeleted",
       payload: postId,
@@ -105,7 +104,6 @@ const createComment = async (req: Request, res: Response) => {
     await comment
       .save()
       .then(async (_comment) => await _comment.populate("user", "avatar name"));
-    console.log("Log from createComment: ", comment);
     sendWebSocketMessage({
       type: "comments/commentAdded",
       payload: comment,
@@ -151,7 +149,6 @@ const deleteComment = async (req: Request, res: Response) => {
       });
     }
     Comment.remove(commentId);
-    Logger.log(`Comment with id ${commentId} deleted`);
     sendWebSocketMessage({
       type: "comments/commentDeleted",
       payload: commentId,
@@ -170,6 +167,7 @@ const deleteComment = async (req: Request, res: Response) => {
 export default {
   getAllPosts,
   createPost,
+  deletePost,
   createComment,
   getAllComments,
   deleteComment,

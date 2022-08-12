@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import morgan from "morgan";
+
 import PostRoute from "./routes/post.routes";
 import UserRoute from "./routes/user.routes";
 import isUnderMaintenance from "./middlewares/isUnderMaintenance";
@@ -12,7 +14,12 @@ import isUnderMaintenance from "./middlewares/isUnderMaintenance";
 // Build HTTP server
 export function buildHttpServer() {
   const app = express();
-  // Middleware
+  // Middlewares
+  if (app.get("env") === "development") {
+    app.use(morgan("dev"));
+  } else {
+    app.use(morgan("combined"));
+  }
   app.use(cookieParser());
   app.use(cors({ credentials: true, origin: FRONTEND_ORIGIN }));
   app.use(bodyParser.urlencoded({ extended: true }));

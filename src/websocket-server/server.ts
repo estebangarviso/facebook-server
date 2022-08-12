@@ -32,7 +32,6 @@ const InitializedWebSocketServer = (server: Server) => {
         const json = JSON.parse(stringData);
         if (json.key === WEBSOCKET_SERVER_KEY) {
           wss.clients.forEach((client) => {
-            Logger.log("client id: " + client.clientId);
             if (json.clients === "ALL") {
               client.send(data);
             } else if (

@@ -8,7 +8,8 @@ import config from "./config";
   await config.verify;
   // Connect to MongoDB
   await MongoConnect();
+  // Start HTTP server
   const server = buildHttpServer();
-  // Initialize websocket server
+  // HOC websocket server
   InitializedWebSocketServer(server);
 })();

@@ -5,7 +5,6 @@ import { ACCESS_TOKEN_SECRET } from "../config";
 const isAuthenticated: RequestHandler = (req, res, next) => {
   const token =
     req.cookies.token || req.headers.token?.toString().split(" ")[1];
-  console.log({ headers: JSON.stringify(req.headers) });
 
   if (!token) {
     return res.status(401).json({

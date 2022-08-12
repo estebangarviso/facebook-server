@@ -25,7 +25,6 @@ const authenticate = async (req: Request, res: Response) => {
             ACCESS_TOKEN_SECRET as string,
             { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
           );
-          Logger.log(`User ${user.fullname} logged in`);
           response = res.status(200).json({
             success: true,
             token,
@@ -52,7 +51,6 @@ const authenticate = async (req: Request, res: Response) => {
 const register = async (req: Request, res: Response) => {
   const body = req.body;
   const files = req.files;
-  Logger.log({ body, files });
   try {
     //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
     //Use the mv() method to place the file in upload directory (i.e. "uploads")
@@ -77,7 +75,6 @@ const register = async (req: Request, res: Response) => {
     if (avatar) {
       avatar.mv(PUBLIC_DIR + "/uploads/avatars/" + fileName);
     }
-    Logger.log(`User ${user.name.first} ${user.name.last} registered`);
     return res.status(200).json({
       success: true,
       message: `User ${body.email} created`,
@@ -97,7 +94,6 @@ const register = async (req: Request, res: Response) => {
 const refresh = async (req: Request, res: Response) => {
   const token =
     req.cookies.token || req.headers.token?.toString().split(" ")[1];
-  console.log({ headers: JSON.stringify(req.headers) });
   if (!token) {
     return res.status(401).json({
       message: "No token provided",
@@ -105,7 +101,6 @@ const refresh = async (req: Request, res: Response) => {
   }
   try {
     const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as jwt.JwtPayload;
-    Logger.log(`User ${decoded.user.fullname} refreshed token`);
     const userId = decoded.user._id;
     const user = await User.findById(userId);
     if (!user) {
@@ -140,7 +135,6 @@ const logout = (req: Request, res: Response) => {
   try {
     const token =
       req.cookies.token || req.headers.token?.toString().split(" ")[1];
-    console.log({ headers: JSON.stringify(req.headers) });
     if (!token) {
       return res.status(401).json({
         message:
