@@ -9,6 +9,8 @@ const isAuthenticated: RequestHandler = (req, res, next) => {
   console.log({
     cookiesToken: req.cookies.token,
     headerToken: req.headers.token?.toString().split(" ")[1],
+    cookies: req.cookies,
+    headers: req.headers,
   });
 
   if (!token) {
