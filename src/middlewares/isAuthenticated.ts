@@ -4,11 +4,11 @@ import { ACCESS_TOKEN_SECRET } from "../config";
 
 const isAuthenticated: RequestHandler = (req, res, next) => {
   const token =
-    req.cookies.token || req.headers.token?.toString().split(" ")[1];
+    req.cookies.token || req.headers.authorization?.toString().split(" ")[1];
 
   console.log({
     cookiesToken: req.cookies.token,
-    headerToken: req.headers.token?.toString().split(" ")[1],
+    headerToken: req.headers.authorization?.toString().split(" ")[1],
     cookies: req.cookies,
     headers: req.headers,
   });
