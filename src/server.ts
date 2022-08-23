@@ -33,6 +33,7 @@ export function buildHttpServer() {
         callback(new Error("Not allowed by CORS"));
       }
     },
+    credentials: true,
   };
   app.use(cors(corsOptions));
   app.use(bodyParser.urlencoded({ extended: true }));
