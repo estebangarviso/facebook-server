@@ -6,6 +6,11 @@ const isAuthenticated: RequestHandler = (req, res, next) => {
   const token =
     req.cookies.token || req.headers.token?.toString().split(" ")[1];
 
+  console.log({
+    cookiesToken: req.cookies.token,
+    headerToken: req.headers.token?.toString().split(" ")[1],
+  });
+
   if (!token) {
     return res.status(401).json({
       message: "No token provided",

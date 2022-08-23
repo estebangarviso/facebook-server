@@ -10,6 +10,7 @@ import morgan from "morgan";
 import PostRoute from "./routes/post.routes";
 import UserRoute from "./routes/user.routes";
 import isUnderMaintenance from "./middlewares/isUnderMaintenance";
+import beforeAuthenticate from "./middlewares/beforeAuthenticate";
 
 // Build HTTP server
 export function buildHttpServer() {
@@ -40,7 +41,7 @@ export function buildHttpServer() {
   app.use("/", express.static(PUBLIC_DIR));
   app.set("trust proxy", true);
   app.use(isUnderMaintenance);
-
+  app.use(beforeAuthenticate);
   // Routes
   app.use(PostRoute);
   app.use(UserRoute);
