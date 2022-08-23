@@ -21,7 +21,19 @@ export function buildHttpServer() {
     app.use(morgan("combined"));
   }
   app.use(cookieParser());
-  app.use(cors({ credentials: true, origin: FRONTEND_ORIGIN }));
+  // app.use(cors({ credentials: true, origin: FRONTEND_ORIGIN }));
+  const whitelist = [FRONTEND_ORIGIN];
+  const corsOptions = {
+    origin: function (origin: any, callback: any) {
+      console.log({ origin });
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  };
+  app.use(cors(corsOptions));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(fileUpload());
   app.use(express.json());

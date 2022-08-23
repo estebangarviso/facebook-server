@@ -28,7 +28,6 @@
     "start": "node index.js",
     "build": "tsc",
     "dev": "nodemon",
-    "test": "npx ts-node src/tests/index.ts",
     "lint": "tslint -p ./tsconfig.json",
     "lint:fix": "npm run lint -- --fix"
   },

@@ -49,51 +49,6 @@ export const WEBSOCKET_SERVER_KEY = process.env.WEBSOCKET_SERVER_KEY as string;
 export const PAGE_SIZES = JSON.parse(process.env.PAGE_SIZES as string) as {
   [key: string]: number;
 };
-
-// const Config = {
-//   verify() {
-//     if (!PUBLIC_DIR) {
-//       throw new Error("PUBLIC_DIR is not defined");
-//     }
-//     if (!PORT) {
-//       throw new Error(`PORT is not defined`);
-//     }
-//     if (!DATABASE_URL) {
-//       throw new Error("DATABASE_URL is not defined");
-//     }
-//     if (!DATABASE_NAME) {
-//       throw new Error("DATABASE_NAME is not defined");
-//     }
-//     if (!ACCESS_TOKEN_SECRET) {
-//       throw new Error("ACCESS_TOKEN_SECRET is not defined");
-//     }
-//     if (!ACCESS_TOKEN_EXPIRES_IN) {
-//       throw new Error("ACCESS_TOKEN_EXPIRES_IN is not defined");
-//     }
-//     if (!FRONTEND_ORIGIN) {
-//       throw new Error("FRONTEND_ORIGIN is not defined");
-//     }
-//     if (typeof SKIP_VALIDATION !== "boolean") {
-//       throw new Error("SKIP_VALIDATION is not defined");
-//     }
-//     if (SALT_WORK_FACTOR < 1) {
-//       throw new Error("SALT_WORK_FACTOR is not defined");
-//     }
-//     if (!WEBSOCKET_SERVER_URL) {
-//       throw new Error("WEBSOCKET_SERVER_URL is not defined");
-//     }
-//     if (!WEBSOCKET_SERVER_KEY) {
-//       throw new Error("WEBSOCKET_SERVER_KEY is not defined");
-//     }
-//     if (PAGE_SIZES === undefined) {
-//       if (Object.keys(PAGE_SIZES).length === 0) {
-//         throw new Error("PAGE_SIZES does not have any value");
-//       }
-//       throw new Error("PAGE_SIZES is not defined");
-//     }
-//     Logger.success(`Environment variables are set correctly`);
-//   },
-// };
 const Config = {
   verify: new Promise((resolve, reject) => {
     if (!PUBLIC_DIR) {
