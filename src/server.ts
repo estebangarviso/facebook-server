@@ -42,7 +42,7 @@ export function buildHttpServer() {
   app.use("/", express.static(PUBLIC_DIR));
   app.set("trust proxy", true);
   app.use(isUnderMaintenance);
-  app.use(beforeAuthenticate);
+
   // Routes
   app.use(PostRoute);
   app.use(UserRoute);
