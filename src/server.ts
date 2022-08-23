@@ -22,11 +22,9 @@ export function buildHttpServer() {
     app.use(morgan("combined"));
   }
   app.use(cookieParser());
-  // app.use(cors({ credentials: true, origin: FRONTEND_ORIGIN }));
   const whitelist = [FRONTEND_ORIGIN];
   const corsOptions = {
     origin: function (origin: any, callback: any) {
-      console.log({ origin });
       if (whitelist.indexOf(origin) !== -1) {
         callback(null, true);
       } else {

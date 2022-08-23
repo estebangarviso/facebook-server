@@ -7,20 +7,21 @@ import {
   PUBLIC_DIR,
 } from "../config";
 import { UploadedFile } from "express-fileupload";
-import { Logger, userPayload } from "../utils";
+import { Logger } from "../utils";
 
 const authenticate = async (req: Request, res: Response) => {
   const body = req.body;
   try {
     const user = await User.findOne({ email: body.email });
     if (user) {
+      const { password, ...userWithoutPassword } = user;
       let response;
       user.comparePassword(body.password, (_err: any, isMatch: boolean) => {
         if (_err) throw _err;
         if (isMatch) {
           const token = jwt.sign(
             {
-              user: userPayload(user),
+              user: userWithoutPassword,
             },
             ACCESS_TOKEN_SECRET as string,
             { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
@@ -93,7 +94,7 @@ const register = async (req: Request, res: Response) => {
 
 const refresh = async (req: Request, res: Response) => {
   const token =
-    req.cookies.token || req.headers.token?.toString().split(" ")[1];
+    req.cookies.token || req.headers.authorization?.toString().split(" ")[1];
   if (!token) {
     return res.status(401).json({
       message: "No token provided",
@@ -109,9 +110,10 @@ const refresh = async (req: Request, res: Response) => {
       });
     }
 
+    const { password, ...userWithoutPassword } = user;
     const _token = jwt.sign(
       {
-        user: userPayload(user),
+        user: userWithoutPassword,
       },
       ACCESS_TOKEN_SECRET as string,
       {
@@ -134,7 +136,7 @@ const logout = (req: Request, res: Response) => {
   // remove token from cookies if it exists and from jwt
   try {
     const token =
-      req.cookies.token || req.headers.token?.toString().split(" ")[1];
+      req.cookies.token || req.headers.authorization?.toString().split(" ")[1];
     if (!token) {
       return res.status(401).json({
         message:
