@@ -1,21 +1,21 @@
-import { Schema, model } from 'mongoose';
-import UserMethods, { preSaveUser } from './methods/user.method';
-import UserValidation from './validations/user.validation';
-import type { IUser } from './user.model.d';
+/// <reference path="./types/user.type.ts" />
+import { Schema, model } from "mongoose";
+import UserMethods, { preSaveUser } from "./methods/user.method";
+import UserValidation from "./validations/user.validation";
 
 export const UserSchema = new Schema<IUser>(
   {
     avatar: {
       type: String,
-      required: true,
+      required: false,
       validate: {
         validator: (avatar: string) => {
-          // @ts-ignore
           if (UserSchema.methods.skipValidation()) return true;
           return UserValidation.avatar(avatar);
         },
-        message: 'File extension not allowed (only png, jpg, jpeg, gif)'
-      }
+        message: "File extension not allowed (only png, jpg, jpeg, gif)",
+      },
+      default: undefined,
     },
     name: {
       first: {
@@ -23,27 +23,25 @@ export const UserSchema = new Schema<IUser>(
         required: true,
         validate: {
           validator: (firstName: string) => {
-            // @ts-ignore
             if (UserSchema.methods.skipValidation()) return true;
             return UserValidation.name(firstName);
           },
-          message: 'First name must be at least 2 characters long'
+          message: "First name must be at least 2 characters long",
         },
-        trim: true
+        trim: true,
       },
       last: {
         type: String,
         required: true,
         validate: {
           validator: (lastName: string) => {
-            // @ts-ignore
             if (UserSchema.methods.skipValidation()) return true;
             return UserValidation.name(lastName);
           },
-          message: 'Last name must be at least 2 characters long'
+          message: "Last name must be at least 2 characters long",
         },
-        trim: true
-      }
+        trim: true,
+      },
     },
     email: {
       type: String,
@@ -55,8 +53,8 @@ export const UserSchema = new Schema<IUser>(
           if (UserSchema.methods.skipValidation()) return true;
           return UserValidation.email(email);
         },
-        message: 'Email is not valid'
-      }
+        message: "Email is not valid",
+      },
     },
     password: {
       type: String,
@@ -68,27 +66,27 @@ export const UserSchema = new Schema<IUser>(
           return UserValidation.password(password);
         },
         message:
-          'Password must be at least 8 characters long, contain at least one number, one uppercase letter and one special character (@$!%*?&)'
-      }
-    }
+          "Password must be at least 8 characters long, contain at least one number, one uppercase letter and one special character (@$!%*?&)",
+      },
+    },
   },
   {
     timestamps: true,
-    methods: UserMethods
+    methods: UserMethods,
   }
 );
 
 /**
  * Virtuals
  */
-UserSchema.virtual('fullname').get(function () {
+UserSchema.virtual("fullname").get(function () {
   return `${this.name.first} ${this.name.last}`;
 });
 
-UserSchema.pre('save', preSaveUser);
+UserSchema.pre("save", preSaveUser);
 
 /**
  * Validations
  */
 
-export const User = model('User', UserSchema);
+export const User = model("User", UserSchema);

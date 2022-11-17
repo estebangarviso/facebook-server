@@ -1,6 +1,6 @@
 export default {};
-import express from 'express';
-import { DecodedUser } from '../token';
+import express from "express";
+import { DecodedUser } from "~/token";
 
 declare global {
   namespace Express {

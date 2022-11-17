@@ -1,15 +1,14 @@
 import { RequestHandler } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET } from "../config";
+import { ACCESS_TOKEN_SECRET } from "~/config";
+import httpErrors from "http-errors";
 
 const isAuthenticated: RequestHandler = (req, res, next) => {
   const token =
     req.cookies.token || req.headers.authorization?.toString().split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({
-      message: "No token provided",
-    });
+    throw new httpErrors.Unauthorized("No token provided");
   }
 
   //Decoding the token
@@ -19,9 +18,7 @@ const isAuthenticated: RequestHandler = (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(401).json({
-      message: "Invalid token",
-    });
+    throw new httpErrors.Unauthorized("Invalid token");
   }
 };
 

@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../models";
+import { User } from "~/database/mongo/models";
 import {
   ACCESS_TOKEN_SECRET,
   ACCESS_TOKEN_EXPIRES_IN,
   PUBLIC_DIR,
-} from "../config";
+} from "~/config";
 import { UploadedFile } from "express-fileupload";
-import { Logger } from "../utils";
 
 const authenticate = async (req: Request, res: Response) => {
   const body = req.body;
@@ -42,7 +41,7 @@ const authenticate = async (req: Request, res: Response) => {
       message: "Invalid email or password",
     });
   } catch (error: any) {
-    Logger.error(error);
+    console.error(error);
     return res.status(500).json({
       message: "Internal server error",
     });
@@ -125,7 +124,7 @@ const refresh = async (req: Request, res: Response) => {
       token: _token,
     });
   } catch (error: any) {
-    Logger.error(error);
+    console.error(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -146,7 +145,7 @@ const logout = (req: Request, res: Response) => {
     // clean cookie token from browser
     res.clearCookie("token");
   } catch (error: any) {
-    Logger.error(error);
+    console.error(error);
     return res.status(500).json({
       message: error.message,
     });
