@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run",
+            "type": "node",
+            "request": "launch",
+            "sourceMaps": true,
+            "restart": true,
+            "program": "${workspaceFolder}/src/main.ts",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": ["run", "start:${input:environmentName}"],
+            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+            "skipFiles": ["<node_internals>/**/*.js"],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Test",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "sourceMaps": true,
+            "restart": true,
+            "disableOptimisticBPs": true,
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "run",
+                "test:${input:environmentName}",
+                "${fileBasenameNoExtension}",
+                "--runInBand",
+                "-no-cache",
+                "--config",
+                "jest.config.json"
+            ],
+            "skipFiles": ["<node_internals>/**/*.js"],
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "environmentName",
+            "type": "pickString",
+            "description": "Select execution environment",
+            "default": "dev",
+            "options": ["dev", "prod"]
+        }
+    ]
+}
