@@ -1,6 +1,57 @@
-node_modules
-.env.production
+# dependencies
+/node_modules
+
+# testing
+__reports__
+**/coverage
+**/__coverage__
+junit.xml
+sonar.xml
+test-report.xml
+
+# artifacts
+/dist
+/build
+tsconfig.build.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+debug.log
+debug.json
+
+# OS
+.DS_Store
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn Integrity file
+.yarn - integrity
+
+# dotenv environment variables file
 .env
-.yarnrc
-dist
-todos.md
+.env.*
+!.env.example

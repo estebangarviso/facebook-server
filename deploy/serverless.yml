@@ -1,0 +1,15 @@
+# This file is used by the Serverless Framework to deploy the service to AWS.
+# For more information, see https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/
+service: Api.SocialMedia.Service
+frameworkVersion: '3'
+provider:
+    name: aws
+    runtime: nodejs18.x
+    stage: ${env:ENV}
+    region: ${env:AWS_REGION}
+    memorySize: ${env:MEMORY_SIZE}
+    timeout: 30
+    # Duration for CloudWatch log retention (default: forever).
+    # Can be overridden for each function separately inside the functions block, see below on page.
+    # Valid values: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
+    logRetentionInDays: 14
